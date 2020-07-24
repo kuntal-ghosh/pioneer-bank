@@ -1,19 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pioneer Bank</title>
-    <style src="assets/css/style.css">
-
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
-    <h1>
-        Welcome pioneer Bank
-    </h1>
+    <div class="container" id="login-area">
+        <h1 class="text-center m-5">
+            Welcome To Pioneer Bank
+        </h1>
+        <div class="login-board">
+
+            <h4>Login</h4>
+            <input type="text" id="email" class="form-control" placeholder="Email">
+            <input type="password" id="password" class="form-control mt-3" placeholder="Password">
+            <button id="login" class="btn btn-success mt-3">Log In</button>
+
+        </div>
+    </div>
+    <div class="container transaction-area" id="transaction">
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="deposit status">
+                    <h5>Deposit</h5>
+                    <h3>$<span id="deposit-money">00</span></h3>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="withdraw status">
+                    <h5>
+                        Withdraw
+                    </h5>
+                    <h3>
+                        $<span id="withdraw-id">00</span>
+                    </h3>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+
+                <div class="balance status">
+                    <h5>
+                        Balance
+                    </h5>
+                    <h3>
+                        $<span id="balance-id">00</span>
+                    </h3>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6 text-center ">
+                <div class="input-board">
+                    <h4>Deposit</h4>
+                    <input type="text" class="form-control" id="deposit-input" placeholder="amount you want to deposit">
+                    <button class="btn btn-primary mt-3" id="deposit-btn">Deposit</button>
+                </div>
+
+            </div>
+            <div class="col-md-6 text-center ">
+                <div class="input-board">
+                    <h4 id="withdraw-btn">Withdraw</h4>
+                    <input type="text" class="form-control" id="withdraw-input"
+                        placeholder="amount you want to withdraw">
+                    <button class="btn btn-primary mt-3" id="withdrawBtn">withdraw</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src=" https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 
 
-    <script src="assets/js/index.js"></script>
+    <script>
+
+        const login = document.getElementById('login');
+        const emailId = document.getElementById("email");
+        login.disabled = true;
+        login.setAttribute("value", "hello");
+        const transactionArea = document.getElementById('transaction');
+
+        const depositInput = document.getElementById("deposit-input");
+        const withdrawInput = document.getElementById("withdraw-input");
+
+        const depositBtn = document.getElementById("deposit-btn");
+
+        // const withdrawBtn = document.getElementById("withdraw-btn");
+        const withdrawBtn = document.getElementById("withdrawBtn");
+        withdrawBtn.addEventListener('click', () => {
+
+            console.log("clicked");
+
+            let withdrawValue = parseFloat(withdrawInput.value);
+            if (!isNaN(withdrawValue)) {
+
+                const withdraw = document.getElementById('withdraw-id');
+                withdrawMoney = parseFloat(withdraw.innerText);
+                // const totalMoney = depositValue + depositMoney;
+                withdraw.innerText = withdrawValue;
+
+                balanceId = document.getElementById("balance-id");
+                let balance = parseFloat(balanceId.innerText);
+                if (balance > 0 && balance > withdrawValue) {
+                    balance = balance - withdrawValue;
+                }
+                else {
+                    alert("insufficient money");
+                }
+
+                balanceId.innerText = balance;
+
+            }
+            else {
+                alert("provide a valid amount to deposit");
+            }
+
+        })
+
+        depositBtn.addEventListener('click', () => {
+            let depositValue = parseFloat(depositInput.value);
+            if (!isNaN(depositValue)) {
+
+                const deposit = document.getElementById('deposit-money');
+                depositMoney = parseFloat(deposit.innerText);
+                // const totalMoney = depositValue + depositMoney;
+                deposit.innerText = depositValue;
+
+                balanceId = document.getElementById("balance-id");
+                let balance = parseFloat(balanceId.innerText);
+                balance = balance + depositValue;
+
+                balanceId.innerText = balance;
+
+            }
+            else {
+                alert("provide a valid amount to deposit");
+            }
+
+        })
+
+
+        emailId.addEventListener("keydown", () => {
+            if (emailId.value !== "") {
+                login.disabled = false;
+            }
+            else {
+                login.disabled = true;
+
+            }
+        })
+
+        login.addEventListener('click', (event) => {
+            console.log(event.target);
+            // alert('hello');
+            // confirm("want to save the password?");
+            const loginArea = document.getElementById('login-area');
+            loginArea.style.display = "none";
+            transactionArea.style.display = "block";
+
+            // emailId.value="hi";
+
+        })
+
+
+    </script>
+
 </body>
+
 </html>
